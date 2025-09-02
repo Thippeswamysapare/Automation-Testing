@@ -1,0 +1,28 @@
+git config --global user.name "Thippeswamysapare"
+git config --global user.email "saparethippeswamy@gmail.com"
+
+create a new repository on the command line
+echo "# PersonalDocuments" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/Thippeswamysapare/PersonalDocuments.git
+git push -u origin main
+
+
+
+ push an existing repository from the command line
+git remote add origin https://github.com/Thippeswamysapare/PersonalDocuments.git
+git branch -M main
+git push -u origin main
+
+git init
+git branch <branch-name>
+check switch <branch-name>
+add files
+git status
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/Thippeswamysapare/PersonalDocuments.git
+git push -u origin main
