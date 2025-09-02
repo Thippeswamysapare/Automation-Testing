@@ -1,0 +1,230 @@
+https://jsonpathfinder.com/
+https://jsonformatter.org/
+
+Rest Assured URL  ---------->  https://github.com/rest-assured/rest-assured/wiki/GettingStarted
+Fake API URL:   https://reqres.in/
+
+GET API URL:  https://reqres.in/api/users?page=2
+
+1. Open Eclipse and create a Maven project
+2. Open pom.xml and following dependency under <dependencies>
+
+<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+<dependency>
+    <groupId>io.rest-assured</groupId>
+    <artifactId>rest-assured</artifactId>
+    <version>5.5.5</version>
+    <scope>test</scope>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.testng/testng -->
+<dependency>
+    <groupId>org.testng</groupId>
+    <artifactId>testng</artifactId>
+    <version>7.11.0</version>
+    <scope>test</scope>
+</dependency>
+
+<dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>json-path</artifactId>
+      <version>5.5.5</version>
+      <scope>test</scope>
+</dependency>
+
+<dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>xml-path</artifactId>
+      <version>5.5.5</version>
+      <scope>test</scope>
+</dependency>
+
+<dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>json-schema-validator</artifactId>
+      <version>5.5.5</version>
+      <scope>test</scope>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+<dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.13.1</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+<dependency>
+    <groupId>com.googlecode.json-simple</groupId>
+    <artifactId>json-simple</artifactId>
+    <version>1.1.1</version>
+</dependency>
+
+
+--> Check Mavendependencies folder 
+
+Do  Ctrl+A  and Ctrl+I  for indentation
+
+3. If we want to add TestNG dependency from Eclipse follow the steps
+
+Click "Help -> Install New Software..." on top level menu
+Paste the url https://testng.org/testng-eclipse-update-site to Work with:  text field and press enter.
+Select the plugins
+Click "Next" button and accept the license to complete the installation.
+Restart Eclipse
+
+4. Testing APIs --> https://regres.in
+
+5. Create packages under src/test/java
+
+tests
+demo
+
+6. Create a new class under Tests package
+
+
+import io.restassured.RestAssured.*
+import static io.restassured.matcher.RestAssuredMatchers.*;
+import static org.hamcrest.Matchers.*;
+
+@Test
+public void FirstApiTest()
+{
+Response response= RestAssured.get("https://reqres.in/api/users?page=2");     // Class
+
+
+System.out.println(response.getStatusCode());
+System.out.println(response.getTime());
+System.out.println(response.getBody().asString());
+response.getStatusLine();
+response.getHeader("content-type");
+
+Assert.assertEqal(response.getStatusCode(),200);
+
+}
+
+https://reqres.in/api/users?page=2
+
+https://reqres.in/api/users/2
+https://reqres.in/api/users/23
+https://reqres.in/api/unknown
+
+https://reqres.in/api/unknown    post
+{
+    "name": "morpheus",
+    "job": "leader"
+}
+
+https://reqres.in/api/users/2   PUT
+{
+    "name": "morpheus",
+    "job": "zion resident"
+}
+
+https://reqres.in/api/users/2   PATCH
+{
+    "name": "morpheus",
+    "job": "zion resident"
+}
+
+
+https://reqres.in/api/users/2  DELETE
+
+
+https://reqres.in/api/register  POST
+
+
+publc void test(){
+
+baseURI="https://reqres.in/api";
+given().
+	get("/users?page=2").
+	then().
+	statusCode(200).
+	body("data[3].id",equalsTo(8)).
+	body("data[0].firstname",equalTo("george")).
+	body("data[0].firstname",hasItems("george","Michel")).
+	log().
+	all();	
+}
+
+POST:
+
+public void FirstPostRequest()
+{
+Map<String, Object> map= new HashMap<String,Object>();
+map.put("name","Raghu");
+map.put("job","SWEngineer");
+System.out.println(map);
+
+JSONObject request=new JSONObject(map);
+System.out.println(request.toJSONString());
+
+
+OR
+JSONObject request=new JSONObject();
+request.put("name","George");
+request.put("job","SWE");
+
+baseURI="https://reqres.in/api";
+
+given().
+	header("Content-Type","application/json").
+	contentType(contentType.JSON).
+	accept(contentType.JSON).
+	body(request.toJSONString()).
+when.
+	post("users").
+then.
+	statusCode(201).
+	log().
+	all();
+	
+}
+
+
+public class GetAndPostReq
+{	@Test
+	public void GetPost()
+	{
+	baseURI="https://reqres.in/api"
+	given.
+		get("/users?page=2").
+	then.
+		statusCode(200).
+	body("data[1].first_name",equalTo("Lindsay").
+	body("data[1].last_name",equalTo("Ferguson").
+	log().All();
+	
+		
+	}
+
+	@Test
+	public void TestPost()
+	{
+	Map<String,Object> map= new HaspMap<String,Object>(); // Creating a map collection
+	map.put("user1","pass1");
+	map.put("user2","pass2");
+	JSONObject jsonObject= new JSONObject(map)
+	System.out.println(jsonObject);
+	
+	baseURI="https://reqres.in/api"
+	
+	Given().
+		header("Content-Type","application/json").
+		contentType(contentType.JSON).
+		accept(contentType.JSON).
+		body(jsonObject.toJSONString()).
+	when.		
+		post("/api/users").
+	then.
+		statusCode(201).
+		log().
+		all();
+		
+	
+	
+	}
+
+}
+
